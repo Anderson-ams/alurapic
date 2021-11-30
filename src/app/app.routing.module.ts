@@ -7,26 +7,35 @@ import { PhotoListComponent } from './photos/photo-list/photo-list.component';
 import { PhotoListResolver } from './photos/photo-list/photo-list.resolver';
 
 const routes: Routes = [
-    {
-      path: 'user/:userName',
-      component: PhotoListComponent,
-      resolve: {
-        photos: PhotoListResolver
-      }
-    },
-    {
-      path: 'p/add',
-      component: PhotoFormComponent
-    },
-    {
-      path: '**',
-      component: NotFoundComponent
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'home'
+  },
+  {
+    path: 'home',
+    loadChildren: './home/home.module#HomeModule'
+  },
+  {
+    path: 'user/:userName',
+    component: PhotoListComponent,
+    resolve: {
+      photos: PhotoListResolver
     }
+  },
+  {
+    path: 'p/add',
+    component: PhotoFormComponent
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];
 
 @NgModule({
   imports: [
-     RouterModule.forRoot(routes)
+     RouterModule.forRoot(routes, {useHash: true} )
   ],
   exports: [ RouterModule ]
 })
